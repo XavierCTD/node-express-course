@@ -1,4 +1,4 @@
-const http = require("http");
+const http = require('http');
 var StringDecoder = require("string_decoder").StringDecoder;
 
 const getBody = (req, callback) => {
@@ -14,25 +14,77 @@ const getBody = (req, callback) => {
     const resultHash = {};
     bodyArray.forEach((part) => {
       const partArray = part.split("=");
-      resultHash[partArray[0]] = partArray[1];
+      const key = partArray[0]
+      const value = decodeURIComponent(partArray[1].replace(/\+/g, " "));
+      resultHash[key] = value;
     });
     callback(resultHash);
   });
 };
 
 // here, you could declare one or more variables to store what comes back from the form.
-let item = "Enter something below.";
+let item = "Enter item here";
+let intro = "Welcome to the coffee shop!"
 
 // here, you can change the form below to modify the input fields and what is displayed.
 // This is just ordinary html with string interpolation.
 const form = () => {
   return `
+  <header>
+  <h1 id="color1">${intro}</h1>
+  <p class="center">From here you will find the finest drink we can offer you.</p>
+  </header>
   <body>
-  <p>${item}</p>
+  <ul>
+  <li></li>
+  <li></li>
+  <li></li>
+  </ul>
+  <p class="center">${item}.</p>
+
   <form method="POST">
   <input name="item"></input>
   <button type="submit">Submit</button>
+  <p id="page"></p> 
   </form>
+  
+  <footer id="thanks"></footer>
+
+  <script>
+
+  const formElement = document.querySelector("form");
+
+  formElement.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    setTimeout(() => {
+      document.getElementById("page").innerText = "Your drink has been added.";
+    }, 1500)
+
+    setTimeout(() => {
+      document.getElementById("thanks").innerText = "Thank you for visiting our coffee shop! See you soon!"
+    }, 3000)
+
+    setTimeout(() => {
+      formElement.submit();
+    }, 3500)
+    });
+  </script>
+  
+  <style>
+    * {
+      color: light green;
+     }
+    .center {
+      text-align: center;
+      color: gray;
+    }
+    #color1 {
+      text-align: center;
+      color: gray;
+    }
+  </style>
+
   </body>
   `;
 };

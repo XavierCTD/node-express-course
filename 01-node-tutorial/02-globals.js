@@ -6,7 +6,7 @@
 // module     - info about current module (file)
 // process    - info about env where the program is being executed
 
-console.log(__dirname)
+console.log("__dirname", __dirname);
 setInterval(() => {
-  console.log('hello world')
+  console.log("MY_VAR:", process.env.MY_VAR);
 }, 1000)

@@ -6,3 +6,12 @@ function addValues() {
 }
 
 addValues()
+
+const firstName = 'Xavier';
+const lastName = 'Mcallister';
+
+function introTest() {
+  console.log(`Hi. My name is ${firstName} ${lastName}!`);  
+}
+
+introTest()
