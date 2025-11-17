@@ -36,9 +36,9 @@ const form = () => {
   </header>
   <body>
   <ul>
-  <li></li>
-  <li></li>
-  <li></li>
+  <li>Coffee cup</li>
+  <li>Mocha</li>
+  <li>Frappe</li>
   </ul>
   <p class="center">${item}.</p>
 
