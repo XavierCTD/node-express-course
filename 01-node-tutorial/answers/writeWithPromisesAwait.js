@@ -2,7 +2,9 @@ const { writeFile, readFile } = require('fs').promises;
 
 const writer = async () => {
     try {
-        await writeFile('temp.txt', "Line 1\nLine 2\nLine 3\n");
+        await writeFile('temp.txt', "Line 1\n");
+        await writeFile('temp.txt', "Line 2\n", { flag: 'a' });
+        await writeFile('temp.txt', "Line 3\n", { flag: 'a' });
         console.log("Finished writing this file.");
 
     } catch(error) {
@@ -13,8 +15,8 @@ const writer = async () => {
 
 const reader = async () => {
     try {
-     await readFile("temp.txt", "utf8");
-     console.log("Finished reading this file."); 
+     const data = await readFile("temp.txt", "utf8");
+     console.log(data); 
 
     } catch(error) {
         console.log("Error reading file occured:", error);

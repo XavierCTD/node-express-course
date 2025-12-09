@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Express example</h1>
+    <button id="produce">Products</button>
+    <div id="output"></div>
+
+    <script>
+       const produceButton = document.getElementById("produce");
+       const inputData = document.getElementById("output");
+
+       produceButton.addEventListener("click", async () => {
+        const result = await fetch("/api/v1/products");
+        const newData = await result.json();
+
+        inputData.innerHTML = "";
+
+        newData.forEach(product => {
+            const item = document.createElement("p");
+            item.textContent = `${product.id}: ${product.name} - $${product.price}`;
+            inputData.appendChild(item);
+        });
+       });
+    </script>
+</body>
+</html>
