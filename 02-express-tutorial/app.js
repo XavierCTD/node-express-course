@@ -1,9 +1,27 @@
 const express = require('express');
 const path = require('path');
+const peopleRouter = require("./routes/people");
 const { products } = require("./data");
 const app = express();
+const logger = (req, res, next) => {
+    console.log(`${req.method} ${req.url} at ${new Date().toLocaleString()}`);
+    next();
+};
 
+
+app.use(logger);
+
+// Middleware
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Router(s)
+
+app.use("/api/v1/people", peopleRouter)
+
+// Products Endpoints
 
 app.get('/api/v1/products', (req, res) => {
     const newProducts = products.map((product) => {
@@ -29,6 +47,8 @@ app.get('/api/v1/products/:productID', (req, res) => {
     res.json(product);
 });
 
+
+// Query example
 app.get('/api/v1/query', (req, res) => {
     const { search, limit } = req.query
     let sortedProducts = [...products]
@@ -42,17 +62,20 @@ app.get('/api/v1/query', (req, res) => {
         sortedProducts = sortedProducts.slice(0, Number(limit))
     }
     if (sortedProducts.length < 1) {
-        return res.status(200).json({ sucess: true, data: [] })
+        return res.status(200).json({ success: true, data: [] })
     }
     res.status(200).json(sortedProducts)
 });
 
+
+// Home route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Catch-all
 app.all('*', (req, res) => {
-    res.status(404).send('<h1>Error 404:</h1> <br/> <p>Page not found.<p>');
+    res.status(404).send('<h1>Error 404:</h1><br /><p>Page not found.<p>');
 });
 
 app.listen(3000, () => {
