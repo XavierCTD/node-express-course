@@ -27,6 +27,7 @@ const addPerson = (req, res) => {
     }
 
     people.push({ id: people.length + 1, name})
+  
     res.status(201).json({ success: true, name: name })
 };
 
@@ -39,7 +40,7 @@ const updatePerson = (req, res) => {
   if(!name) {
     return res
     .status(404)
-    .json({ success: false, message: `No person with id ${id}` });
+    .json({ success: false, message: `No person with id ${id}` };
   }
 
   person.name = name;
