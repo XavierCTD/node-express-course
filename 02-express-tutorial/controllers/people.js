@@ -27,7 +27,8 @@ const addPerson = (req, res) => {
     }
 
     people.push({ id: people.length + 1, name})
-    res.status(201).json({ success: true, person: name })
+  
+    res.status(201).json({ success: true, name: name })
 };
 
 const updatePerson = (req, res) => {
@@ -36,10 +37,10 @@ const updatePerson = (req, res) => {
 
   const person = people.find((p) => p.id === id);
   
-  if(!person) {
+  if(!name) {
     return res
     .status(404)
-    .json({ message: "Person not found" });
+    .json({ success: false, message: `No person with id ${id}` };
   }
 
   person.name = name;
@@ -53,7 +54,7 @@ const deletePerson = (req, res) => {
     if (!personExists) {
         return res
           .status(404)
-          .json({ success: false, message: "Person not found." });
+          .json({ success: false, message: `No person with id ${id}.` });
     }
 
     const newPeople = people.filter((p) => p.id !== id);
